@@ -39,6 +39,13 @@ async function run() {
         const ordersCollection = client.db('tradeVilla').collection('orders');
         const userCollection = client.db('tradeVilla').collection('users');
 
+        // add product
+        app.post('/addProduct', async (req, res) => {
+            const newProduct = req.body;
+            const result = await productsCollection.insertOne(newProduct);
+            res.send(result);
+        })
+
         // all products
         app.get('/products', async (req, res) => {
             const query = {};
@@ -57,8 +64,8 @@ async function run() {
 
         //  Add a new Order
         app.post('/addOrder', async (req, res) => {
-            const newProduct = req.body;
-            const result = await ordersCollection.insertOne(newProduct);
+            const newOrder = req.body;
+            const result = await ordersCollection.insertOne(newOrder);
             res.send(result);
         })
 
