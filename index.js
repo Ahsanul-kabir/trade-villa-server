@@ -38,6 +38,7 @@ async function run() {
         const productsCollection = client.db('tradeVilla').collection('products');
         const ordersCollection = client.db('tradeVilla').collection('orders');
         const userCollection = client.db('tradeVilla').collection('users');
+        const reviewsCollection = client.db('tradeVilla').collection('reviews');
 
         // add product
         app.post('/addProduct', async (req, res) => {
@@ -120,6 +121,18 @@ async function run() {
             const myOrders = await cursor.toArray();
             res.send(myOrders);
         })
+
+        // add review
+        app.post('/review', async (req, res) => {
+            const result = await reviewsCollection.insertOne(req.body);
+            res.json(result)
+        });
+
+        // get review
+        app.get('/reviews', async (req, res) => {
+            const result = await reviewsCollection.find({}).toArray();
+            res.send(result);
+        });
     }
     finally {
 
