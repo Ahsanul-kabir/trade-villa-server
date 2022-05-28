@@ -130,6 +130,25 @@ async function run() {
             res.send(result);
         })
 
+        // get all orders
+        app.get('/allOrders', async (req, res) => {
+            const orders = await ordersCollection.find({}).toArray();
+            res.send(orders)
+        })
+
+        // status update of an order
+        app.put('/statusUpdate/:id', async (req, res) => {
+            const filter = { _id: ObjectId(req.params.id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: req.body.status
+                },
+            };
+            const result = await ordersCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+        })
+
         // add review
         app.post('/review', async (req, res) => {
             const result = await reviewsCollection.insertOne(req.body);
