@@ -122,6 +122,14 @@ async function run() {
             res.send(myOrders);
         })
 
+        // delete orders
+        app.delete('/delete/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await ordersCollection.deleteOne(query);
+            res.send(result);
+        })
+
         // add review
         app.post('/review', async (req, res) => {
             const result = await reviewsCollection.insertOne(req.body);
@@ -142,9 +150,9 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Hello From Doctor Uncle!')
+    res.send('Hello From Trade Villa!')
 })
 
 app.listen(port, () => {
-    console.log(`Doctors App listening on port ${port}`)
+    console.log(`Trade Villa App listening on port ${port}`)
 })
