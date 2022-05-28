@@ -63,6 +63,13 @@ async function run() {
             res.send(result);
         })
 
+        // products delete
+        app.delete('/products/:id', async (req, res) => {
+            const query = { _id: ObjectId(req.params.id) };
+            const result = await productsCollection.deleteOne(query);
+            res.send(result);
+        })
+
         //  Add a new Order
         app.post('/addOrder', async (req, res) => {
             const newOrder = req.body;
